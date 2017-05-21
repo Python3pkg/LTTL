@@ -15,4 +15,4 @@ vowel_seg = Segmenter.tokenize(
 )
 
 for i in word_seg[1].get_contained_segment_indices(vowel_seg):
-    print(vowel_seg[i].get_content())
+    print((vowel_seg[i].get_content()))

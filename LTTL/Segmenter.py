@@ -28,9 +28,9 @@ Provides public functions:
 - bypass()
 """
 
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
+
+
+
 
 import re
 import random
@@ -94,7 +94,7 @@ def concatenate(
     # ordered list of all unique str_index involved
     str_indices = list()
     for segmentation in segmentations:
-        for k in segmentation.str_index_ptr.keys():
+        for k in list(segmentation.str_index_ptr.keys()):
             if k not in str_indices:
                 str_indices.append(k)
 
@@ -698,7 +698,7 @@ def sample(
     # Get the indices of sampled segments...
     if mode == 'random':
         sampled_indices = sorted(random.sample(
-            range(len(segmentation)),
+            list(range(len(segmentation))),
             sample_size
         ))
     elif mode == 'systematic':
@@ -928,7 +928,7 @@ def import_xml(
             end = len(Segmentation.get_data(str_index))
         if start == end:
             return False
-        for (attr, value_regex) in conditions.items():
+        for (attr, value_regex) in list(conditions.items()):
             if (
                     (attr not in annotations) or
                     (not value_regex.search(annotations[attr]))

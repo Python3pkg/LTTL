@@ -18,8 +18,8 @@ You should have received a copy of the GNU General Public License
 along with LTTL v2.0. If not, see <http://www.gnu.org/licenses/>.
 """
 
-from __future__ import absolute_import
-from __future__ import unicode_literals
+
+
 
 from LTTL.Input import Input
 from LTTL.Table import IntPivotCrosstab
@@ -673,32 +673,32 @@ class TestCooc(unittest.TestCase):
 
     # 1. Co-occurrence in window without annotation:
     def test_cooc_window_woa_col_type(self):
-        for col_type in self.output_cooc_in_window_woa.col_type.values():
+        for col_type in list(self.output_cooc_in_window_woa.col_type.values()):
             self.assertEqual(col_type, 'continuous')
 
     # 2. Co-occurrence in window with annotation:
     def test_cooc_window_wa_table_col_type(self):
-        for col_type in self.output_cooc_in_window_wa.col_type.values():
+        for col_type in list(self.output_cooc_in_window_wa.col_type.values()):
             self.assertEqual(col_type, 'continuous')
 
     # 3. Co-occurrence in context without secondary unit and without annotation:
     def test_cooc_context_wos_woa_col_type(self):
-        for col_type in self.output_cooc_in_context_wos_woa.col_type.values():
+        for col_type in list(self.output_cooc_in_context_wos_woa.col_type.values()):
             self.assertEqual(col_type, 'continuous')
 
     # 4. Co_occurrence in context wihout a secondary unit and with annotation:
     def test_cooc_context_wos_wa_col_type(self):
-        for col_type in self.output_cooc_in_context_wos_wa.col_type.values():
+        for col_type in list(self.output_cooc_in_context_wos_wa.col_type.values()):
             self.assertEqual(col_type, 'continuous')
 
     # 5. Co_occurrence in context wih a secondary unit and without annotation:
     def test_cooc_context_ws_woa_col_type(self):
-        for col_type in self.output_cooc_in_context_ws_wa.col_type.values():
+        for col_type in list(self.output_cooc_in_context_ws_wa.col_type.values()):
             self.assertEqual(col_type, 'continuous')
 
     # 6. Co_occurrence in context wih a secondary unit and with annotation:
     def test_cooc_context_ws_wa_col_type(self):
-        for col_type in self.output_cooc_in_context_ws_wa.col_type.values():
+        for col_type in list(self.output_cooc_in_context_ws_wa.col_type.values()):
             self.assertEqual(col_type, 'continuous')
 
     def assertItemsEqual(self, iterable1, iterable2):

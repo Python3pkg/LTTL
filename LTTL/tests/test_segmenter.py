@@ -18,8 +18,8 @@ You should have received a copy of the GNU General Public License
 along with LTTL v2.0. If not, see <http://www.gnu.org/licenses/>.
 """
 
-from __future__ import absolute_import
-from __future__ import unicode_literals
+
+
 
 __version__ = "1.0.1"
 

@@ -26,9 +26,9 @@ Provides classes:
 - IntWeightedFlatCrosstab(WeightedFlatCrosstab)
 """
 
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
+
+
+
 
 from .Utils import tuple_to_simple_dict_transpose
 
@@ -41,6 +41,7 @@ import sys
 from builtins import str as text
 from future.utils import iteritems
 from past.builtins import xrange
+from functools import reduce
 
 __version__ = "1.0.4"
 
@@ -667,8 +668,8 @@ class PivotCrosstab(Crosstab):
         np_table.fill(self.missing or 0)
 
         # Fill and return numpy table...
-        for row_idx in xrange(len(self.row_ids)):
-            for col_idx in xrange(len(self.col_ids)):
+        for row_idx in range(len(self.row_ids)):
+            for col_idx in range(len(self.col_ids)):
                 try:
                     np_table[row_idx][col_idx] = self.values[
                         (self.row_ids[row_idx], self.col_ids[col_idx])
@@ -801,15 +802,15 @@ class IntPivotCrosstab(PivotCrosstab):
                 elif type == 'l2':
                     denominator = math.sqrt(sum([v * v for v in row_values]))
                 if denominator > 0:
-                    new_values.update(zip(
+                    new_values.update(list(zip(
                         [(row_id, col_id) for col_id in col_ids],
                         [v / denominator for v in row_values]
-                    ))
+                    )))
                 else:
-                    new_values.update(zip(
+                    new_values.update(list(zip(
                         [(row_id, col_id) for col_id in col_ids],
                         [0 for v in row_values]
-                    ))
+                    )))
                 if progress_callback:
                     progress_callback()
         elif mode == 'columns':
@@ -825,15 +826,15 @@ class IntPivotCrosstab(PivotCrosstab):
                 elif type == 'l2':
                     denominator = math.sqrt(sum([v * v for v in col_values]))
                 if denominator > 0:
-                    new_values.update(zip(
+                    new_values.update(list(zip(
                         [(row_id, col_id) for row_id in row_ids],
                         [v / denominator for v in col_values]
-                    ))
+                    )))
                 else:
-                    new_values.update(zip(
+                    new_values.update(list(zip(
                         [(row_id, col_id) for row_id in row_ids],
                         [0 for v in col_values]
-                    ))
+                    )))
                 if progress_callback:
                     progress_callback()
         elif mode == 'table':
@@ -850,21 +851,21 @@ class IntPivotCrosstab(PivotCrosstab):
             elif type == 'l2':
                 denominator = math.sqrt(sum([v * v for v in values]))
             if denominator > 0:
-                new_values.update(zip(
+                new_values.update(list(zip(
                     reduce(list.__add__, [
                         [(row_id, col_id) for row_id in self.row_ids]
                         for col_id in self.col_ids
                         ]),
                     [v / denominator for v in values]
-                ))
+                )))
             else:
-                new_values.update(zip(
+                new_values.update(list(zip(
                     reduce(list.__add__, [
                         [(row_id, col_id) for row_id in self.row_ids]
                         for col_id in self.col_ids
                         ]),
                     [0 for v in values]
-                ))
+                )))
         elif mode == 'presence/absence':
             table_class = IntPivotCrosstab
             row_ids = self.row_ids
@@ -898,7 +899,7 @@ class IntPivotCrosstab(PivotCrosstab):
                     for col_id in col_ids
                     ]
                 row_total = sum(row_values)
-                for col_idx in xrange(len(col_ids)):
+                for col_idx in range(len(col_ids)):
                     freq_under_indep = row_total * col_total[col_idx]
                     if freq_under_indep > 0:
                         new_values[(row_id, col_ids[col_idx])] = (
@@ -920,15 +921,15 @@ class IntPivotCrosstab(PivotCrosstab):
                 df = sum(col_occurrences)
                 if df > 0:
                     idf = math.log(len(row_ids) / df)
-                    new_values.update(zip(
+                    new_values.update(list(zip(
                         [(row_id, col_id) for row_id in row_ids],
                         [v * idf for v in col_values]
-                    ))
+                    )))
                 else:
-                    new_values.update(zip(
+                    new_values.update(list(zip(
                         [(row_id, col_id) for row_id in row_ids],
                         [0 for v in col_values]
-                    ))
+                    )))
                 if progress_callback:
                     progress_callback()
         return (
@@ -1000,7 +1001,7 @@ class IntPivotCrosstab(PivotCrosstab):
             output_matrix = np.dot(pi_inv, np.dot(exchange, pi_inv))
         col_ids = self.col_ids
         values = dict()
-        for col_id_idx1 in xrange(len(col_ids)):
+        for col_id_idx1 in range(len(col_ids)):
             col_id1 = col_ids[col_id_idx1]
             values.update(
                 dict(
@@ -1008,7 +1009,7 @@ class IntPivotCrosstab(PivotCrosstab):
                         (col_id1, col_ids[i]),
                         output_matrix[col_id_idx1, i]
                     )
-                    for i in xrange(len(col_ids))
+                    for i in range(len(col_ids))
                 )
             )
             if progress_callback:
@@ -1052,7 +1053,7 @@ class IntPivotCrosstab(PivotCrosstab):
         for row_id in self.row_ids:
             for col_id in self.col_ids:
                 count = get_count((row_id, col_id), 0)
-                for i in xrange(count):
+                for i in range(count):
                     new_row_id = text(row_counter)
                     new_row_ids.append(new_row_id)
                     new_values[(new_row_id, first_col_id)] = col_id
@@ -1192,7 +1193,7 @@ class FlatCrosstab(Crosstab):
                 first_col_value = self.values[row_id, first_col_id]
                 second_col_value = self.values[row_id, second_col_id]
                 pair = (first_col_value, second_col_value)
-                if pair in row_id_for_pair.keys():
+                if pair in list(row_id_for_pair.keys()):
                     known_pair_row_id = row_id_for_pair[pair]
                     new_values[(known_pair_row_id, '__weight__')] += 1
                 else:
@@ -1210,7 +1211,7 @@ class FlatCrosstab(Crosstab):
             row_id_for_value = dict()
             for row_id in self.row_ids:
                 col_value = self.values[row_id, col_id]
-                if col_value in row_id_for_value.keys():
+                if col_value in list(row_id_for_value.keys()):
                     known_value_row_id = row_id_for_value[col_value]
                     new_values[(known_value_row_id, '__weight__')] += 1
                 else:
@@ -1346,7 +1347,7 @@ class IntWeightedFlatCrosstab(WeightedFlatCrosstab):
                 count = self.values[(row_id, '__weight__')]
                 first_col_value = self.values[row_id, first_col_id]
                 second_col_value = self.values[row_id, second_col_id]
-                for i in xrange(count):
+                for i in range(count):
                     new_row_id = text(row_counter)
                     new_row_ids.append(new_row_id)
                     new_values[(new_row_id, first_col_id)] = first_col_value
@@ -1359,7 +1360,7 @@ class IntWeightedFlatCrosstab(WeightedFlatCrosstab):
             for row_id in self.row_ids:
                 count = self.values[(row_id, '__weight__')]
                 col_value = self.values[row_id, col_id]
-                for i in xrange(count):
+                for i in range(count):
                     new_row_id = text(row_counter)
                     new_row_ids.append(new_row_id)
                     new_values[(new_row_id, col_id)] = col_value

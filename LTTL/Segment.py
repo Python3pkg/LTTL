@@ -17,8 +17,8 @@ You should have received a copy of the GNU General Public License
 along with LTTL v2.0. If not, see <http://www.gnu.org/licenses/>.
 """
 
-from __future__ import absolute_import
-from __future__ import unicode_literals
+
+
 
 from operator import itemgetter
 from itertools import groupby
@@ -288,7 +288,7 @@ class Segment(object):
             start_search = segmentation.str_index_ptr[str_index]
             end_search = min(
                 [
-                    x for x in segmentation.str_index_ptr.values()
+                    x for x in list(segmentation.str_index_ptr.values())
                     if x > start_search
                 ] + [len(segmentation)]
             )
@@ -339,7 +339,7 @@ class Segment(object):
             start_search = segmentation.str_index_ptr[str_index]
             end_search = min(
                 [
-                    x for x in segmentation.str_index_ptr.values()
+                    x for x in list(segmentation.str_index_ptr.values())
                     if x > start_search
                 ] + [len(segmentation)]
             )

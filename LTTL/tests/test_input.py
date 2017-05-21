@@ -18,8 +18,8 @@ You should have received a copy of the GNU General Public License
 along with LTTL v2.0. If not, see <http://www.gnu.org/licenses/>.
 """
 
-from __future__ import absolute_import
-from __future__ import unicode_literals
+
+
 
 __version__ = "1.0.0"
 
@@ -54,20 +54,20 @@ class TestInput(unittest.TestCase):
 
     def test_creator_store_string(self):
         """Does creator store string in class variable?"""
-        Input(u'test')
+        Input('test')
         self.assertEqual(
             Segmentation.get_data(-1)[:],
-            u'test',
+            'test',
             msg="creator doesn't store string in class variable!"
         )
 
     def test_update_string(self):
         """Does update modify stored string?"""
-        seg = Input(u'test2')
-        seg.update(u'modified')
+        seg = Input('test2')
+        seg.update('modified')
         self.assertEqual(
             Segmentation.get_data(-1)[:],
-            u'modified',
+            'modified',
             msg="update doesn't modify stored string!"
         )
 
@@ -86,7 +86,7 @@ class TestInput(unittest.TestCase):
         Input('Hello world!')
         self.assertEqual(
             Segmentation.get_data(-1)[3:7],
-            u"Hello world!"[3:7],
+            "Hello world!"[3:7],
             msg="slicing doesn't return the same as in strings"
         )
 

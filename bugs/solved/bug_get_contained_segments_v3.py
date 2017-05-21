@@ -12,36 +12,36 @@ def main():
     )
 
     # verbatim in input = ok
-    print "verbatim in input:",
+    print("verbatim in input:", end=' ')
     contained_segments = input_seg[0].get_contained_segments(verbatim_seg)
     try:
-        print "ok" if contained_segments[0].get_content() == 'un texte' else "fail"
+        print("ok" if contained_segments[0].get_content() == 'un texte' else "fail")
     except:
-        print "fail"
+        print("fail")
 
     # verbatim in verbatim = ok
-    print "verbatim in verbatim:",
+    print("verbatim in verbatim:", end=' ')
     contained_segments = verbatim_seg[0].get_contained_segments(verbatim_seg)
     try:
-        print "ok" if contained_segments[0].get_content() == 'un texte' else "fail"
+        print("ok" if contained_segments[0].get_content() == 'un texte' else "fail")
     except:
-        print "fail"
+        print("fail")
 
     # input in verbatim = fail
-    print "input in verbatim:",
+    print("input in verbatim:", end=' ')
     contained_segments = verbatim_seg[0].get_contained_segments(input_seg)
     try:
-        print "ok" if contained_segments[0].get_content() == 'un texte' else "fail"
+        print("ok" if contained_segments[0].get_content() == 'un texte' else "fail")
     except:
-        print "fail"
+        print("fail")
 
     # input in input = fail
-    print "input in input:",
+    print("input in input:", end=' ')
     contained_segments = input_seg[0].get_contained_segments(input_seg)
     try:
-        print "ok" if contained_segments[0].get_content() == 'un texte' else "fail"
+        print("ok" if contained_segments[0].get_content() == 'un texte' else "fail")
     except:
-        print "fail"
+        print("fail")
 
 
 if __name__ == '__main__':

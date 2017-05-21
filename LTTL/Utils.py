@@ -30,9 +30,9 @@ Provides public functions:
 - prepend_unit_with_category()
 """
 
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
+
+
+
 
 from future.utils import iteritems, itervalues
 from builtins import range, chr
@@ -73,7 +73,7 @@ def sample_dict(dictionary, sample_size):
             continue
         break
     if num_to_sample > 0:
-        raise ValueError(u'Not enough elements in dictionary')
+        raise ValueError('Not enough elements in dictionary')
     return new_dict
 
 
@@ -132,10 +132,10 @@ def get_expected_subsample_variety(dictionary, subsample_size):
     """
     sample_size = sum(dictionary.values())
     if subsample_size > sample_size:
-        raise ValueError(u'Not enough elements in dictionary')
+        raise ValueError('Not enough elements in dictionary')
     num_subsamples = binom(sample_size, subsample_size, exact=True)
     expected_variety = len(dictionary)
-    for freq in dictionary.values():
+    for freq in list(dictionary.values()):
         expected_variety -= _prob_no_occurrence(
             sample_size, subsample_size, freq, num_subsamples
         )
@@ -231,7 +231,7 @@ def get_unused_char_in_segmentation(segmentation, annotation_key=None):
         if annotation_key:
             text = segment.annotations.get(
                 annotation_key,
-                u'__none__',
+                '__none__',
             )
         else:
             text = segment.get_content()
@@ -261,12 +261,12 @@ def prepend_unit_with_category(
             segment.annotations.copy()
         )
         if unit_annotation_key:
-            unit = segment.annotations.get(unit_annotation_key, u'__none__')
+            unit = segment.annotations.get(unit_annotation_key, '__none__')
         else:
             unit = segment.get_content()
         if category_annotation_key:
             category = segment.annotations.get(
-                category_annotation_key, u'__none__'
+                category_annotation_key, '__none__'
             )
         else:
             category = segment.get_content()
@@ -303,41 +303,41 @@ if __name__ == '__main__':
     #         print 'parsing failed'
     my_dict = {'a': 2, 'b': 1, 'c': 1}
     for i in range(10):
-        print(sample_dict(my_dict, 2))
+        print((sample_dict(my_dict, 2)))
     try:
         sample_dict(my_dict, 5)
     except ValueError:
         print("exception correctly raised")
     my_dict = {('a', 'A'): 1, ('a', 'B'): 2, ('b', 'A'): 0, ('b', 'B'): 3}
-    print(tuple_to_simple_dict(my_dict, 'a'))
-    print(tuple_to_simple_dict(my_dict, 'b'))
+    print((tuple_to_simple_dict(my_dict, 'a')))
+    print((tuple_to_simple_dict(my_dict, 'b')))
     values = [2, 3, 4]
     weights = [2, 1, 1]
-    print(get_average(values))
-    print(get_average(values, weights))
-    print(get_perplexity({'a': 1, 'b': 1}))
+    print((get_average(values)))
+    print((get_average(values, weights)))
+    print((get_perplexity({'a': 1, 'b': 1})))
     unit_dict = {'a': 1, 'b': 2}
     category_dict = {'A': 2, 'B': 1}
     recoded_unit_dict = {'A#a': 1, 'A#b': 1, 'B#b': 1}
-    print(get_variety(unit_dict))
-    print(get_variety(unit_dict, unit_weighting=True))
-    print(get_variety(recoded_unit_dict, category_delimiter='#'))
-    print(get_variety(
+    print((get_variety(unit_dict)))
+    print((get_variety(unit_dict, unit_weighting=True)))
+    print((get_variety(recoded_unit_dict, category_delimiter='#')))
+    print((get_variety(
         recoded_unit_dict,
         unit_weighting=True,
         category_delimiter='#'
-    ))
-    print(get_variety(
+    )))
+    print((get_variety(
         recoded_unit_dict,
         category_weighting=True,
         category_delimiter='#',
-    ))
-    print(get_variety(
+    )))
+    print((get_variety(
         recoded_unit_dict,
         unit_weighting=True,
         category_weighting=True,
         category_delimiter='#',
-    ))
+    )))
     # print generate_random_dict_key(recoded_unit_dict, length=8)
     # seg1 = Input(u'hello world', 'text1')
     # seg2 = Input(u'cruel world', 'text2')

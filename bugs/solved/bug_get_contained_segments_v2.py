@@ -16,4 +16,4 @@ consonant_seg = Segmenter.tokenize(
 
 # Prints nothing (though 'n' is in 'un'
 for seg in word_seg[0].get_contained_segments(consonant_seg):
-    print(seg.get_content())
+    print((seg.get_content()))
